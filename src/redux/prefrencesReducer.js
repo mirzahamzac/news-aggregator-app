@@ -1,10 +1,11 @@
 const initialState = {
-    sources: [],
-    categories: [],
-    authors: [],
+    sources: '',
+    categories: '',
+    authors: '',
   };
   
   const preferencesReducer = (state = initialState, action) => {
+    debugger
     switch (action.type) {
       case 'SET_PREFERENCES':
         return {

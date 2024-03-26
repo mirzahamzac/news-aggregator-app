@@ -65,7 +65,7 @@ const fetchNews = async (searchTerm, filters, filter1) => {
       const response = await axios.get(THE_GUARDIAN_BASE_URL, {
         params: {
           q: searchTerm, // Example query
-          section: "Sports", //filter1?.category ,
+          section: filter1?.category ,
           "api-key": THE_GUARDIAN_API_KEY,
         },
       });
@@ -94,20 +94,6 @@ const getSourcesByNewsSelection = async  (newsApiName) => {
 };
 
 
-const getCategoriesByNewsSelection = async  (newsApiName) => {
-  debugger
-  if (newsApiName === "news_api_org") {
-    try {
-      const response = await axios.get(
-        `${NEWS_API_ORG_BASE_URL}/top-headlines/sources?apiKey=${NEWS_API_ORG_API_KEY}`
-      );
-      return response.data.sources; // Assuming API returns an array of articles
-    } catch (error) {
-      console.error("Error fetching news:", error);
-      return [];
-    }
-  }
-};
 export default {
   fetchNews,
   getSourcesByNewsSelection

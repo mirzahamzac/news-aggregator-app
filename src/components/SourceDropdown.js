@@ -1,13 +1,16 @@
 import React from 'react';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
-const SourceDropdown = ({ handleFilterChange  }) => {
+const SourceDropdown = ({ handleFilterChange ,setNews }) => {
   return (
     <FormControl fullWidth>
       <InputLabel>Select Source</InputLabel>
       <Select
         label="Filter by"
-        onChange={(e) => handleFilterChange('filterType', e.target.value)}
+        onChange={(e) => {
+          setNews([])
+          handleFilterChange('filterType', e.target.value)
+      }}
         defaultValue=""
       >
       

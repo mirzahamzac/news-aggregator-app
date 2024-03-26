@@ -15,7 +15,7 @@ const NewsFeed = ({ articles, filters }) => {
     a.click();
   };
   return (
-    <div>
+    <div style={{alignContent:'justify'}}>
       {articles &&
         articles.length > 0 &&
         filters === "news_api_org" &&
@@ -23,11 +23,15 @@ const NewsFeed = ({ articles, filters }) => {
           (article) =>
             article &&
             article.title !== "[Removed]" && (
-              <Card sx={{ maxWidth: 345, float: "left", margin: "10px" }}>
+              <Card sx={{ maxWidth: 345, height : 'fit-content', float: "left", margin: "10px" }}>
                 <CardMedia
                   component="img"
                   height="140"
-                  image={article.urlToImage && article.urlToImage !== "" ? article.urlToImage : "" }
+                  image={
+                    article.urlToImage && article.urlToImage !== "" || article.urlToImage !==null
+                      ? article.urlToImage
+                      : "https://newsapi.org/images/n-logo-border.png"
+                  }
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -62,7 +66,7 @@ const NewsFeed = ({ articles, filters }) => {
               component="img"
               height="140"
               src={
-                article.multimedia[0]?.url
+                article && article?.multimedia?.length > 0 && article.multimedia[0]?.url
                   ? `https://nytimes.com/${article.multimedia[0].url}`
                   : "https://upload.wikimedia.org/wikipedia/commons/4/40/New_York_Times_logo_variation.jpg"
               }
@@ -103,7 +107,7 @@ const NewsFeed = ({ articles, filters }) => {
           </Card>
         ))}
 
-{articles &&
+      {articles &&
         articles.length > 0 &&
         filters === "guardian" &&
         articles.map((article) => (
@@ -111,7 +115,9 @@ const NewsFeed = ({ articles, filters }) => {
             <CardMedia
               component="img"
               height="140"
-              src={"https://upload.wikimedia.org/wikipedia/commons/7/75/The_Guardian_2018.svg"}
+              src={
+                "https://upload.wikimedia.org/wikipedia/commons/7/75/The_Guardian_2018.svg"
+              }
               // src={
               //   article?.multimedia[0]?.url
               //     ? `https://nytimes.com/${article.multimedia[0].url}`
@@ -132,10 +138,10 @@ const NewsFeed = ({ articles, filters }) => {
                 {/* {article.abstract} */}
               </Typography>
 
-             
-              <small>{moment(article?.webPublicationDate).format("DD-MMM-YYYY")}</small>
+              <small>
+                {moment(article?.webPublicationDate).format("DD-MMM-YYYY")}
+              </small>
               <br />
-            
             </CardContent>
             <CardActions>
               <Button

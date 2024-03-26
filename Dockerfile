@@ -9,12 +9,11 @@ RUN npm i @mui/material
 RUN npm i axios
 RUN npm i @emotion/react
 RUN npm i @emotion/styled
-
-
+RUN npm i react-datepicker
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 1997
 
 CMD ["npm","run","start"]
 

@@ -106,7 +106,7 @@ const App = () => {
       <Provider store={store}>
         <Container>
           <h1>News Aggregator Website</h1>
-          <SourceDropdown handleFilterChange={handleFilterChange} />
+          <SourceDropdown handleFilterChange={handleFilterChange} setNews={setNews}/>
           <SearchBar
             searchTerm={searchTerm}
             handleSearchChange={handleSearchChange}

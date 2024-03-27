@@ -6,8 +6,15 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
+import DescriptionComponent from "./DescriptionComponent ";
 
 const NewsFeed = ({ articles, filters }) => {
+  const [showFullDescription, setShowFullDescription] = React.useState(false);
+
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+
   const handleLearnMore = (url) => {
     var a = document.createElement("a");
     a.href = url;
@@ -15,7 +22,7 @@ const NewsFeed = ({ articles, filters }) => {
     a.click();
   };
   return (
-    <div style={{alignContent:'justify'}}>
+    <div style={{ alignContent: "justify" }}>
       {articles &&
         articles.length > 0 &&
         filters === "news_api_org" &&
@@ -23,12 +30,20 @@ const NewsFeed = ({ articles, filters }) => {
           (article) =>
             article &&
             article.title !== "[Removed]" && (
-              <Card sx={{ maxWidth: 345, height : 'fit-content', float: "left", margin: "10px" }}>
+              <Card
+                sx={{
+                  maxWidth: 345,
+                  height: "fit-content",
+                  float: "left",
+                  margin: "10px",
+                }}
+              >
                 <CardMedia
                   component="img"
                   height="140"
                   image={
-                    article.urlToImage && article.urlToImage !== "" || article.urlToImage !==null
+                    (article.urlToImage && article.urlToImage !== "") ||
+                    article.urlToImage !== null
                       ? article.urlToImage
                       : "https://newsapi.org/images/n-logo-border.png"
                   }
@@ -41,9 +56,7 @@ const NewsFeed = ({ articles, filters }) => {
                     Published At:{" "}
                     {moment(article.publishedAt).format("DD-MMM-YYYY")}
                   </small>
-                  <Typography variant="body2" color="text.secondary">
-                    {article.description}
-                  </Typography>
+                  <DescriptionComponent description={article.description} />
                 </CardContent>
                 <CardActions>
                   <Button
@@ -66,7 +79,9 @@ const NewsFeed = ({ articles, filters }) => {
               component="img"
               height="140"
               src={
-                article && article?.multimedia?.length > 0 && article.multimedia[0]?.url
+                article &&
+                article?.multimedia?.length > 0 &&
+                article.multimedia[0]?.url
                   ? `https://nytimes.com/${article.multimedia[0].url}`
                   : "https://upload.wikimedia.org/wikipedia/commons/4/40/New_York_Times_logo_variation.jpg"
               }
@@ -93,7 +108,7 @@ const NewsFeed = ({ articles, filters }) => {
               <small>{moment(article.pub_date).format("DD-MMM-YYYY")}</small>
               <br />
               <Typography variant="body2" component="p">
-                {article.snippet}
+                <DescriptionComponent description={article.snippet} />
               </Typography>
             </CardContent>
             <CardActions>

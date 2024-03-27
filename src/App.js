@@ -24,6 +24,7 @@ const App = () => {
   const [sources, setSources] = useState([]);
   const [newsAPISources, setNewsAPISources] = useState([]);
   const [filters1, setFilters1] = useState({});
+  const [fromDate, setFromDate] = useState();
 
   // const handleOpenModal = (message) => {
   //   setErrorMessage(message);
@@ -58,7 +59,8 @@ const App = () => {
       const articles = await newsServices.fetchNews(
         searchTerm,
         filters,
-        filters1
+        filters1,
+        fromDate
       );
       debugger;
       if (articles && articles?.length > 0) {
@@ -74,7 +76,7 @@ const App = () => {
     };
 
     fetchData();
-  }, [searchTerm, filters, filters1]);
+  }, [searchTerm, filters, filters1,fromDate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -116,6 +118,7 @@ const App = () => {
             categories={categories}
             sources={sources}
             onFilterChange={handleFilterChange1}
+            setFromDate={setFromDate}
           />
 
           <Button className="btn-primary" onClick={handleOpen}>

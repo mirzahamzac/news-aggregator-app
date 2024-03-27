@@ -1,22 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useState } from "react";
-import DatePicker from "react-datepicker";
+//import DatePicker from "react-datepicker";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
+import dayjs, { Dayjs } from "dayjs";
 
 import "react-datepicker/dist/react-datepicker.css";
+import DatePickerValue from "./DatePicker";
+import moment from "moment";
 const Filters = ({
   handleFilterChange,
   categories,
   sources,
   onFilterChange,
+  setFromDate,
 }) => {
   const [startDate, setStartDate] = React.useState(new Date());
   const [catValue, setCatValue] = React.useState();
   const [sourceValue, setSourceValue] = React.useState();
+
+  const [value, setValue] = React.useState(
+    dayjs(new Date().toString("MM/DD/YYYY"))
+  );
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -24,6 +32,20 @@ const Filters = ({
     textAlign: "center",
     color: theme.palette.text.secondary,
   }));
+
+  useEffect(() => {
+    debugger;
+    if (value) {
+      var dated = moment(new Date(value).toString("DD/MM/YYYY")).format(
+        "DD/MM/YYYY"
+      );
+      setFromDate(dated);
+    }
+  }, [value]);
+
+  const handleDateChange = (val) => {
+    setValue(val);
+  };
   return (
     <>
       <InputLabel>Filter by</InputLabel>
@@ -74,7 +96,11 @@ const Filters = ({
                   {sources &&
                     sources.length > 0 &&
                     sources.map((source) => (
-                      <MenuItem key={source} value={source} onClick={()=>setSourceValue(source)}>
+                      <MenuItem
+                        key={source}
+                        value={source}
+                        onClick={() => setSourceValue(source)}
+                      >
                         {source}
                       </MenuItem>
                     ))}
@@ -82,16 +108,18 @@ const Filters = ({
               </FormControl>
             </Item>
           </Grid>
-          {/* <Grid item xs={4}>
+          <Grid item xs={4}>
             <Item>
               <FormControl fullWidth>
-                <DatePicker
-                  selected={startDate}
-                  onChange={(date) => setStartDate(date)}
+                <DatePickerValue
+                  name="datedFrom"
+                  value={value}
+                  handleDateChange={handleDateChange}
+                  label={"Dated From"}
                 />
               </FormControl>
             </Item>
-          </Grid> */}
+          </Grid>
         </Grid>
       </Box>
     </>
